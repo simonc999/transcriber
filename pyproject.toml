@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meeting-transcriber"
+version = "0.3.1"
+description = "Local English meeting transcription with timestamps and review flags"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "faster-whisper==1.2.1",
+    # Faster Whisper 1.2.1 uses an av.open argument removed in PyAV 19.
+    "av>=11,<19",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "ctranslate2==4.9.1",
+    "nvidia-cublas-cu12>=12,<13",
+    "nvidia-cuda-nvrtc-cu12>=12,<13",
+    "nvidia-cudnn-cu12>=9,<10",
+]
+speakers = [
+    "pyannote.audio==4.0.4",
+    "torch==2.8.0",
+    "torchaudio==2.8.0",
+    "torchcodec==0.7.0",
+]
+
+[project.scripts]
+meeting-transcriber = "meeting_transcriber.cli:main"
